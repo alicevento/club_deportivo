@@ -138,57 +138,58 @@ app.get("/editar", (req, res) => {
 //Crear una ruta que elimine un deporte solicitado desde el cliente y persista este cambio. En el  Backend  Validar  que  se  recibe  el  parámetro  requerido,  también  validar  después  si  existe  el  deporte solicitado y solo si existe  se podrá eliminar. Manejar esta ruta utilizando parámetros no queryStrings, ojo, que esto requiere un pequeño cambio en el Front.
 //Para probar en el thunder client: DELETE
 // Crear una ruta para eliminar un deporte
-app.delete("/eliminar/:nombreDeporte", (req, res) => {
-  const nombreDeporte = req.params.nombreDeporte;
-
-  // Validar si se recibió el parámetro requerido
-  if (!nombreDeporte) {
-    return res.status(400).json({
-      error: "Debe proporcionar el nombre del deporte a eliminar",
-    });
-  }
-
-  // Leer el archivo JSON de deportes
-  fs.readFile("deportes.json", "utf8", (err, data) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({
-        error: "Error interno del servidor al leer el archivo de deportes",
+// Ruta para eliminar un deporte (utilizando GET)
+app.get("/eliminar/:nombreDeporte", (req, res) => {
+    const nombreDeporte = req.params.nombreDeporte;
+  
+    // Validar si se recibió el parámetro requerido
+    if (!nombreDeporte) {
+      return res.status(400).json({
+        error: "Debe proporcionar el nombre del deporte a eliminar",
       });
     }
-
-    let deportes = JSON.parse(data);
-
-    // Buscar el deporte en la lista
-    const buscarDeporte = deportes.findIndex(
-      (deporte) => deporte.nombre === nombreDeporte
-    );
-
-    // Verificar si se encontró el deporte
-    if (buscarDeporte === -1) {
-      return res.status(404).json({
-        error: `El deporte '${nombreDeporte}' no se encontró en la lista`,
-      });
-    }
-
-    // Eliminar el deporte de la lista
-    deportes.splice(buscarDeporte, 1);
-
-    // Escribir el arreglo actualizado en el archivo JSON
-    fs.writeFile("deportes.json", JSON.stringify(deportes), (err) => {
+  
+    // Leer el archivo JSON de deportes
+    fs.readFile("deportes.json", "utf8", (err, data) => {
       if (err) {
         console.error(err);
         return res.status(500).json({
-          error:
-            "Error interno del servidor al escribir en el archivo de deportes",
+          error: "Error interno del servidor al leer el archivo de deportes",
         });
       }
-
-      // Devolver un mensaje de éxito
-      res.send(`El deporte '${nombreDeporte}' se eliminó correctamente`);
+  
+      let deportes = JSON.parse(data);
+  
+      // Buscar el deporte en la lista
+      const buscarDeporte = deportes.findIndex(
+        (deporte) => deporte.nombre === nombreDeporte
+      );
+  
+      // Verificar si se encontró el deporte
+      if (buscarDeporte === -1) {
+        return res.status(404).json({
+          error: `El deporte '${nombreDeporte}' no se encontró en la lista`,
+        });
+      }
+  
+      // Eliminar el deporte de la lista
+      deportes.splice(buscarDeporte, 1);
+  
+      // Escribir el arreglo actualizado en el archivo JSON
+      fs.writeFile("deportes.json", JSON.stringify(deportes), (err) => {
+        if (err) {
+          console.error(err);
+          return res.status(500).json({
+            error: "Error interno del servidor al escribir en el archivo de deportes",
+          });
+        }
+  
+        // Devolver un mensaje de éxito
+        res.send(`El deporte '${nombreDeporte}' se eliminó correctamente`);
+      });
     });
   });
-});
+  
 
 // Middleware para manejar rutas no encontradas
 app.use((req, res) => {
