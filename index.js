@@ -100,7 +100,7 @@ app.get("/deportes", (req, res) => {
 // Ruta  que  edite  el  precio  de  un  deporte  registrado,  utilizando  los  parámetros  de la consulta y persista este cambio. Recuerde que para modificar se debe consultar, por tanto,  hay  que  validar  2  cosas  primero  que  se  reciba  el  parámetro  y  después  que  exista  el  deporte coincidente con el parámetro. Manejar esta ruta con queryStrings.
 
 // Ruta /editar para editar el precio de un deporte
-app.get("/editar", (req, res) => {
+app.get("/modificar", (req, res) => {
   const { nombre, precio } = req.query;
 
   // Verificar el nombre y precio
