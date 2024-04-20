@@ -55,4 +55,11 @@ axios.delete(`/eliminar/${nombre}`).then((data) => {
   getData();
 });
 
+## Construido con
 
+JavaScript - El lenguaje utilizado
+Express- El framework web utilizado
+Nodemon- Servidor
+
+# Author
+Alicia Vento 🚀  hello.aliciavento.xyz
