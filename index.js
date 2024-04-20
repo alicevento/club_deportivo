@@ -88,8 +88,13 @@ app.get("/deportes", (req, res) => {
       error: "Error interno del servidor",
     });
   }
+  //usar lodash para ordenar el archivo json por la consola
+  deportes = _.orderBy(deportes, ["nombre"], ["asc"]);
+
+  
   // Enviar la lista de deportes en formato JSON como respuesta
-  res.json({ deportes });
+  console.log(deportes);
+  res.send({ deportes });
 });
 
 // Ruta  que  edite  el  precio  de  un  deporte  registrado,  utilizando  los  parámetros  de la consulta y persista este cambio. Recuerde que para modificar se debe consultar, por tanto,  hay  que  validar  2  cosas  primero  que  se  reciba  el  parámetro  y  después  que  exista  el  deporte coincidente con el parámetro. Manejar esta ruta con queryStrings.

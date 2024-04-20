@@ -50,7 +50,7 @@ Crear una ruta que elimine un deporte solicitado desde el cliente y persista est
 
 // Ejemplo de cómo eliminar un deporte
 
-axios.delete(`/eliminar/${nombre}`).then((data) => {
+axios.get(`/eliminar/${nombre}`).then((data) => {
   alert(data.data);
   getData();
 });
