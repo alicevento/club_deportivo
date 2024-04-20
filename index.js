@@ -121,7 +121,7 @@ app.get("/editar", (req, res) => {
     // Busca el deporte y actualiza el valor
     const index = deportes.findIndex((deporte) => deporte.nombre === nombre);
     if (index === -1) {
-      return res.send("No se existe ningún deporte con ese nombre");
+      return res.send("No existe ningún deporte con ese nombre");
     }
     deportes[index].precio = parseFloat(precio); // Convertir el precio a número
     fs.writeFile("deportes.json", JSON.stringify(deportes), (err) => {
